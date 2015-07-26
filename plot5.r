@@ -40,7 +40,7 @@ draw.plot.5 <- function(sum.baltimore.mv,to.png=T) {
     if (to.png==T)
         png("plot5.png")
     plot(sum.baltimore.mv$year,sum.baltimore.mv$emissions,
-         main="Sum of Motor Vehicle Related PM2.5 Emissions per Year in Baltimore",
+         main="Sum of Motor Vehicle Related PM2.5 Emissions per Year\nin Baltimore",
          ylab="Sum of Emissions",
          xlab="Year",xaxt = "n", type="n")
     axis(1,at=sum.baltimore.mv$year,labels=sum.baltimore.mv$year)

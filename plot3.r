@@ -15,8 +15,9 @@ get.pm25 <- function()
                 get.data.files.ready()
                 pm25 <- save.load.full.data()
             }
-
-        return(pm25)
+        pm25.baltimore <- filter(pm25,fips == "24510")
+        
+        return(pm25.baltimore)
     }
 
 get.clean.sums <- function()
@@ -61,7 +62,7 @@ draw.plot.3 <- function(clean.sums,to.png=T) {
         png("plot3.png")
     g <- ggplot(clean.sums,aes(year,sums,colour=types,group=types))
     p <- g + geom_point() + geom_line()
-    p <- p + labs(title="Sum of PM2.5 Emissions per Year by Type",
+    p <- p + labs(title="Sum of PM2.5 Emissions per Year by Type\nIn Baltimore",
                   y="Sum of Emissions",x="Year")
     print(p)
     if (to.png==T)
@@ -73,7 +74,7 @@ draw.plot.3.basic <- function(clean.sums,to.png=T)
         if (to.png==T)
             png("plot3basic.png")
         with(clean.sums,plot(year,sums,
-                             main="Sum of PM2.5 Emissions per Year by Type",
+                             main="Sum of PM2.5 Emissions per Year by Type\nIn Baltimore",
                              ylab="Sum of Emissions",
                              xlab="Year",xaxt = "n", type="n"))
         axis(1,at=clean.sums$year[1:4],labels=clean.sums$year[1:4])
