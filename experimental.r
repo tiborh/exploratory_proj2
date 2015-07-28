@@ -132,6 +132,22 @@ qplot(year, Emissions, data=Baltimore_PM25_ByYear, geom="line") +
   xlab("Year") +
   ylab(expression("Total" ~ PM[2.5] ~ "Emissions (tons)"))
 
+## 5b
+                                        #Replace source column in df with the textual names in source table
+link <- match(NEI$SCC, SCC$SCC)
+NEI[ ,2] <- SCC[link, 3]
+
+                                        #Subset out rows from df containing only coal combustion-related observations
+df5 <- NEI[grepl("Coal",NEI$SCC), ]
+
+library(plyr)
+                                        #Create a dataframe of total emissions by year and emission type
+df51 <- ddply(df5, .(year), summarise, totalemissions=sum(Emissions, 
+                                                                na.rm=T))
+                                        #Plot emissions by year for this dataset
+barplot(df51$totalemissions, xlab="Year", ylab="Total Emissions",
+        main="Total Emissions by Year for Coal", col="steelblue", 
+        names.arg=df51$year, ylim=c(0,600000))
 
 ## 6
 vehcodes <- SCC[grep("Vehicle",SCC$SCC.Level.Three),'SCC'] # identify motor vehicle related SCC numbers
